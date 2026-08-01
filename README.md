@@ -1,7 +1,7 @@
 # Super Women Thyroid — Registration Landing Page
 
 Single-page, mobile-first registration page for the free live webinar.
-Dark theme. Frontend only — no backend, no database, no Supabase yet.
+The only backend call is the lead submission — see "Lead submission" below.
 
 ## Run
 
@@ -117,20 +117,32 @@ visitor scrolls back into it, via `IntersectionObserver`. It uses a CSS
 correct even if the entrance animation never runs. The footer carries extra
 bottom padding so the bar never permanently covers content.
 
-## Wiring up Supabase later
+## Lead submission
 
-`src/components/RegistrationModal.jsx` — look for:
+`src/lib/submitLead.js` posts to the multi-tenant Supabase Edge Function at
+`${SUPABASE_URL}/functions/v1/submit-lead`, authenticated with the anon
+publishable key. `client_slug` is hardcoded to `"super-women-thyroid"` and
+`source` to `"lp.myhealthnourish.com"` — this page belongs to exactly one
+tenant, so those aren't configurable.
 
-```js
-// TODO: Replace this with Supabase insert later.
-console.log(registration)
-```
+The form has no free-text `message` field — the two MCQ answers
+(`biggest_struggle`, `struggle_duration`) are folded into `message` as
+`"Biggest struggle: <answer> | Duration: <answer>"` since the Edge Function has
+no dedicated slot for them.
 
-The validated payload is already shaped as
-`{ name, email, phone, biggest_struggle, struggle_duration }`.
-Replace the `console.log` and the stand-in `setTimeout` with the awaited insert;
-the button's loading/disabled state and the success-then-redirect flow around it
-do not need to change.
+`RegistrationModal.jsx` calls `submitLead` from `handleSubmit`:
+
+- **submitting** — button shows a spinner and is disabled; a second submit is a
+  no-op.
+- **success** — shows the "You're registered!" state, then redirects to the
+  WhatsApp group after `REDIRECT_DELAY_MS`.
+- **error** — `submitLead` rejects (network failure, or `{ success: false,
+  error }` from the function) → an inline `role="alert"` message renders above
+  the button, the button re-enables, and every field the visitor typed stays
+  exactly as they left it. Editing any field clears the error so they can retry
+  cleanly.
+
+No other backend call exists anywhere on this page.
 
 ## Images
 

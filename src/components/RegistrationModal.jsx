@@ -4,6 +4,7 @@ import CountdownTimer from './CountdownTimer'
 import { OptionSelectField, PhoneField, TextField } from './FormField'
 import { useRegistrationModal } from '../context/RegistrationModalContext'
 import { WHATSAPP_GROUP_URL } from '../lib/webinar'
+import { submitLead } from '../lib/submitLead'
 
 const COUNTRIES = [{ code: 'IN', name: 'India', dial: '+91', flag: '🇮🇳' }]
 
@@ -29,7 +30,6 @@ const EMPTY = {
   struggle_duration: '',
 }
 
-const SUBMIT_DELAY_MS = 700
 const REDIRECT_DELAY_MS = 2500
 
 function validate(values) {
@@ -68,7 +68,8 @@ export default function RegistrationModal() {
   const [values, setValues] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [country, setCountry] = useState('IN')
-  const [status, setStatus] = useState('idle') // idle | submitting | success
+  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [submitError, setSubmitError] = useState('')
 
   const dialogRef = useRef(null)
   const firstFieldRef = useRef(null)
@@ -98,6 +99,7 @@ export default function RegistrationModal() {
   const setFieldValue = (field, value) => {
     setValues((prev) => ({ ...prev, [field]: value }))
     setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev))
+    setSubmitError('')
   }
 
   const setField = (field) => (event) => {
@@ -105,35 +107,42 @@ export default function RegistrationModal() {
     setFieldValue(field, field === 'phone' ? raw.replace(/\D/g, '').slice(0, 10) : raw)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    if (status !== 'idle') return
+    if (status === 'submitting') return
 
     const nextErrors = validate(values)
     setErrors(nextErrors)
     if (Object.keys(nextErrors).length > 0) return
 
     setStatus('submitting')
+    setSubmitError('')
 
-    const registration = {
-      name: values.name.trim(),
-      email: values.email.trim(),
-      phone: values.phone,
-      biggest_struggle: values.biggest_struggle,
-      struggle_duration: values.struggle_duration,
-    }
+    // The two MCQ answers aren't a single free-text field, so they're folded
+    // into `message` — the Edge Function has no dedicated slot for them.
+    const message = `Biggest struggle: ${values.biggest_struggle} | Duration: ${values.struggle_duration}`
 
-    // TODO: Replace this with Supabase insert later.
-    console.log(registration)
+    try {
+      await submitLead({
+        name: values.name.trim(),
+        email: values.email.trim(),
+        phone: values.phone,
+        message,
+      })
 
-    // Stands in for the round-trip the Supabase insert will add, so the button's
-    // loading state is real rather than decorative.
-    setTimeout(() => {
       setStatus('success')
       setTimeout(() => {
         window.location.href = WHATSAPP_GROUP_URL
       }, REDIRECT_DELAY_MS)
-    }, SUBMIT_DELAY_MS)
+    } catch (err) {
+      // Form values are left untouched — nothing the visitor typed is lost.
+      setStatus('error')
+      setSubmitError(
+        err instanceof Error && err.message
+          ? err.message
+          : 'Something went wrong. Please try again.'
+      )
+    }
   }
 
   return (
@@ -253,6 +262,12 @@ export default function RegistrationModal() {
             />
 
             <div className="pt-1">
+              {status === 'error' && (
+                <p role="alert" className="mb-4 text-center text-sm text-danger">
+                  {submitError}
+                </p>
+              )}
+
               <Button type="submit" fullWidth disabled={status === 'submitting'}>
                 {status === 'submitting' ? (
                   <>
