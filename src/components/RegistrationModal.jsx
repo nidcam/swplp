@@ -130,6 +130,12 @@ export default function RegistrationModal() {
         message,
       })
 
+      // Only fires once submitLead has actually resolved successfully — never
+      // on click, and never when it throws.
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead')
+      }
+
       setStatus('success')
       setTimeout(() => {
         window.location.href = WHATSAPP_GROUP_URL
