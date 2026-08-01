@@ -46,7 +46,7 @@ const HOURS = [
 export default function Agenda() {
   return (
     <Section className="bg-mint-grad">
-      <SectionHeading title="Complete 3 Day Agenda.." />
+      <SectionHeading title="Complete 3 Hour Agenda.." />
 
       <ol className="mt-10 grid gap-5 sm:mt-12 md:grid-cols-3 md:gap-6">
         {HOURS.map(({ hour, image, alt, title, points }) => (

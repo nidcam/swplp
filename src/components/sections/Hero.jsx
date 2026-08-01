@@ -32,7 +32,7 @@ export default function Hero() {
             {/* Darker than text-danger: at this small size, #DC2626 on the soft
                 pink fill dips to 4.23:1 — this shade clears 4.5:1. */}
             <p className="rounded-full border border-danger/30 bg-danger-soft px-4 py-1.5 text-center text-[0.8rem] font-semibold text-[#B91C1C] sm:text-sm">
-              🔴 3 Day LIVE Super Women Thyroid Program
+              🔴 3 Hour LIVE Super Women Thyroid Program
             </p>
           </div>
 
