@@ -18,6 +18,8 @@ export async function submitLead(formData) {
       email: formData.email,
       phone: formData.phone,
       message: formData.message || '',
+      biggest_struggle: formData.biggest_struggle,
+      struggle_duration: formData.struggle_duration,
       source: 'lp.myhealthnourish.com',
     }),
   })

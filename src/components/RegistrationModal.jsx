@@ -118,8 +118,8 @@ export default function RegistrationModal() {
     setStatus('submitting')
     setSubmitError('')
 
-    // The two MCQ answers aren't a single free-text field, so they're folded
-    // into `message` — the Edge Function has no dedicated slot for them.
+    // Also folded into `message` as human-readable context, in addition to the
+    // dedicated biggest_struggle / struggle_duration fields below.
     const message = `Biggest struggle: ${values.biggest_struggle} | Duration: ${values.struggle_duration}`
 
     try {
@@ -128,6 +128,8 @@ export default function RegistrationModal() {
         email: values.email.trim(),
         phone: values.phone,
         message,
+        biggest_struggle: values.biggest_struggle,
+        struggle_duration: values.struggle_duration,
       })
 
       // Only fires once submitLead has actually resolved successfully — never
