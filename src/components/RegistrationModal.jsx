@@ -3,7 +3,7 @@ import Button, { OfferCtaLabel } from './ui/Button'
 import CountdownTimer from './CountdownTimer'
 import { OptionSelectField, PhoneField, TextField } from './FormField'
 import { useRegistrationModal } from '../context/RegistrationModalContext'
-import { WHATSAPP_GROUP_URL } from '../lib/webinar'
+import { WEBINAR_FACTS, WHATSAPP_GROUP_URL } from '../lib/webinar'
 import { submitLead } from '../lib/submitLead'
 
 const COUNTRIES = [{ code: 'IN', name: 'India', dial: '+91', flag: '🇮🇳' }]
@@ -195,8 +195,8 @@ export default function RegistrationModal() {
         </h2>
 
         <p className="mx-auto mt-3 max-w-lg text-center text-[0.9rem] leading-relaxed text-muted">
-          Join Nirmala live on Thursday, 6 August at 8:00 PM IST. 90 minutes. LIVE on
-          Zoom. Conducted in Hindi. Completely free.
+          Join Nirmala live on Thursday, 6 August at {WEBINAR_FACTS.time}. 90 minutes.
+          LIVE on Zoom. Conducted in Hindi. Completely free.
         </p>
 
         <CountdownTimer className="mt-6" variant="compact" />

@@ -2,6 +2,7 @@ import Button, { OfferCtaLabel } from '../ui/Button'
 import CountdownTimer from '../CountdownTimer'
 import StarRating from '../ui/StarRating'
 import { useRegistrationModal } from '../../context/RegistrationModalContext'
+import { WEBINAR_FACTS } from '../../lib/webinar'
 
 /**
  * The primary conversion band. The form itself lives in the registration modal —
@@ -18,8 +19,8 @@ export default function CtaBand() {
         </h2>
 
         <p className="mx-auto mt-4 max-w-lg text-center text-[0.975rem] leading-relaxed text-muted sm:text-base">
-          Join Nirmala live on Thursday, 6 August at 8:00 PM IST. 90 minutes. LIVE on
-          Zoom. Conducted in Hindi. Completely free.
+          Join Nirmala live on Thursday, 6 August at {WEBINAR_FACTS.time}. 90 minutes.
+          LIVE on Zoom. Conducted in Hindi. Completely free.
         </p>
 
         <CountdownTimer className="mt-8" variant="compact" heading="Webinar Starts In" />

@@ -20,12 +20,12 @@ export default function Hero() {
     <section id="top">
       {/* 1 — attention strip */}
       <p className="bg-info-grad px-4 py-2.5 text-center text-[0.8rem] font-semibold leading-snug text-white sm:text-sm">
-        ⚠️ Attention: Women tired of thyroid struggles holding you back?
+        ⚠️ Attention: People tired of thyroid struggles holding you back?
       </p>
 
       <div className="bg-mint-grad px-5 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14">
         <div className="mx-auto w-full max-w-6xl animate-fade-up text-center">
-          <StarRating label="Trusted by 50+ Women Transformed" />
+          <StarRating label="Trusted by 50+ People Transformed" />
 
           {/* 2 — program eyebrow */}
           <div className="mt-4 flex justify-center">
@@ -44,7 +44,7 @@ export default function Hero() {
 
           {/* 4 — subheadline */}
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-            Learn how busy women are fixing thyroid issues fast, even with a packed
+            Learn how busy people are fixing thyroid issues fast, even with a packed
             schedule — no crash diets, no giving up your life.
           </p>
 

@@ -4,7 +4,7 @@ import Section from '../ui/Section'
 const STATS = [
   { value: '6', label: 'Years Medication-Free' },
   { value: '2', label: 'Months To Optimal Labs' },
-  { value: '50', label: 'Women Helped' },
+  { value: '50', label: 'People Helped' },
 ]
 
 export default function Host() {
@@ -56,7 +56,7 @@ export default function Host() {
             <p>
               She refused to accept that. After two years of deep study across nutrition,
               dietetics, DNA-based health and yoga, she rebuilt her health from the root.
-              Today she helps other women reclaim their health naturally.
+              Today she helps other people reclaim their health naturally.
             </p>
           </div>
 

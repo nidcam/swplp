@@ -4,7 +4,7 @@ import Section from '../ui/Section'
 import { CheckIcon, CrossIcon } from '../ui/Icons'
 
 const FOR_YOU = [
-  'You’re a woman dealing with thyroid, hormonal or stubborn-weight struggles',
+  'You’re someone dealing with thyroid, hormonal or stubborn-weight struggles',
   'You’re tired of being dismissed and want to actually understand what’s happening in your body',
   'You’re ready to show up for 90 minutes and commit to yourself',
 ]

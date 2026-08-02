@@ -16,7 +16,7 @@ export default function Proof() {
             50
           </div>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-muted">
-            Women who have successfully reversed their thyroid.
+            People who have successfully reversed their thyroid.
           </p>
         </Card>
 
