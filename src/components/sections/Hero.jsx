@@ -32,7 +32,7 @@ export default function Hero() {
             {/* Darker than text-danger: at this small size, #DC2626 on the soft
                 pink fill dips to 4.23:1 — this shade clears 4.5:1. */}
             <p className="rounded-full border border-danger/30 bg-danger-soft px-4 py-1.5 text-center text-[0.8rem] font-semibold text-[#B91C1C] sm:text-sm">
-              🔴 3 Hour LIVE Super Women Thyroid Program
+              🔴 3 Hour LIVE Super Thyroid Program
             </p>
           </div>
 
@@ -55,7 +55,7 @@ export default function Hero() {
                 <iframe
                   className="absolute inset-0 h-full w-full"
                   src="https://www.youtube-nocookie.com/embed/L9Wj8c-BLik"
-                  title="Super Women Thyroid — free live webinar preview"
+                  title="Super Thyroid — free live webinar preview"
                   loading="lazy"
                   allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   referrerPolicy="strict-origin-when-cross-origin"

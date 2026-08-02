@@ -1,4 +1,4 @@
-# Super Women Thyroid — Registration Landing Page
+# Super Thyroid — Registration Landing Page
 
 Single-page, mobile-first registration page for the free live webinar.
 The only backend call is the lead submission — see "Lead submission" below.

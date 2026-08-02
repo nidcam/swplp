@@ -13,7 +13,7 @@ export default function Footer() {
             <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
               Program
             </h2>
-            <p className="mt-3 text-lg font-bold text-heading">Super Women Thyroid</p>
+            <p className="mt-3 text-lg font-bold text-heading">Super Thyroid</p>
           </div>
 
           <div>
@@ -62,7 +62,7 @@ export default function Footer() {
             Main Website
           </a>
           <p className="text-[0.9rem]">
-            © {new Date().getFullYear()} Super Women Thyroid. All rights reserved.
+            © {new Date().getFullYear()} Super Thyroid. All rights reserved.
           </p>
         </div>
 
