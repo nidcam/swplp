@@ -90,7 +90,7 @@ export default function Hero() {
 
           {/* 7 — countdown card, below the CTA */}
           <div className="mx-auto mt-8 max-w-xs rounded-card border border-line bg-white p-4 shadow-soft">
-            <CountdownTimer variant="compact" heading="Webinar Starts In" />
+            <CountdownTimer variant="compact" heading="Enrollment Closes In" />
           </div>
         </div>
       </div>

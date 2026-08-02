@@ -30,7 +30,7 @@ const EMPTY = {
   struggle_duration: '',
 }
 
-const REDIRECT_DELAY_MS = 2500
+const REDIRECT_SECONDS = 5
 
 function validate(values) {
   const errors = {}
@@ -70,6 +70,7 @@ export default function RegistrationModal() {
   const [country, setCountry] = useState('IN')
   const [status, setStatus] = useState('idle') // idle | submitting | success | error
   const [submitError, setSubmitError] = useState('')
+  const [redirectSeconds, setRedirectSeconds] = useState(REDIRECT_SECONDS)
 
   const dialogRef = useRef(null)
   const firstFieldRef = useRef(null)
@@ -93,6 +94,21 @@ export default function RegistrationModal() {
       document.removeEventListener('keydown', onKeyDown)
     }
   }, [isOpen, close, status])
+
+  // Auto-redirect countdown: ticks the visible "Automatically Redirecting in
+  // X Seconds" number down and navigates when it hits zero. The "Join
+  // WhatsApp Group" button below navigates immediately, independent of this.
+  useEffect(() => {
+    if (status !== 'success') return
+
+    if (redirectSeconds <= 0) {
+      window.location.href = WHATSAPP_GROUP_URL
+      return
+    }
+
+    const id = setTimeout(() => setRedirectSeconds((s) => s - 1), 1000)
+    return () => clearTimeout(id)
+  }, [status, redirectSeconds])
 
   if (!isOpen) return null
 
@@ -138,10 +154,8 @@ export default function RegistrationModal() {
         fbq('track', 'Lead')
       }
 
+      setRedirectSeconds(REDIRECT_SECONDS)
       setStatus('success')
-      setTimeout(() => {
-        window.location.href = WHATSAPP_GROUP_URL
-      }, REDIRECT_DELAY_MS)
     } catch (err) {
       // Form values are left untouched — nothing the visitor typed is lost.
       setStatus('error')
@@ -212,6 +226,14 @@ export default function RegistrationModal() {
             <h3 className="mt-5 text-xl font-bold sm:text-2xl">You&rsquo;re registered!</h3>
             <p className="mx-auto mt-3 max-w-sm text-[0.95rem] leading-relaxed text-muted">
               Taking you to the WhatsApp group where your Zoom link will be shared.
+            </p>
+
+            <Button as="a" href={WHATSAPP_GROUP_URL} fullWidth className="mt-6">
+              Join WhatsApp Group
+            </Button>
+            <p className="mt-3 text-sm text-muted">
+              Automatically Redirecting in {redirectSeconds} Second
+              {redirectSeconds === 1 ? '' : 's'}
             </p>
           </div>
         ) : (

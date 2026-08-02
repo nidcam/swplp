@@ -23,7 +23,7 @@ export default function CtaBand() {
           LIVE on Zoom. Conducted in Hindi. Completely free.
         </p>
 
-        <CountdownTimer className="mt-8" variant="compact" heading="Webinar Starts In" />
+        <CountdownTimer className="mt-8" variant="compact" heading="Enrollment Closes In" />
 
         <div className="mt-9 text-center">
           <Button type="button" onClick={open} fullWidth>
