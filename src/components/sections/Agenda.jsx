@@ -14,7 +14,7 @@ const HOURS = [
       'The Thyroid-Liver Connection Most Doctors Miss',
       'Why medication alone never fixes thyroid',
       '3 Hidden Triggers Causing 90% of symptoms',
-      'Introducing SAMPURNA Health Framework',
+      'Introducing JADH Health Framework',
     ],
   },
   {
@@ -26,7 +26,7 @@ const HOURS = [
       'Why your body resists weight loss with thyroid (and how to overcome it)',
       "The leaky gut-thyroid connection that's silently blocking your results",
       'Simple Indian foods that heal your thyroid naturally',
-      'SAMPURNA Reset Protocol: Your daily routine to kickstart healing',
+      'JADH Reset Protocol: Your daily routine to kickstart healing',
     ],
   },
   {
@@ -38,7 +38,7 @@ const HOURS = [
       'What emotional resilience looks like',
       'The morning routine that balances your thyroid naturally',
       'How micro-practices rewire the brain',
-      'SAMPURNA Transformation System',
+      'JADH Transformation System',
     ],
   },
 ]

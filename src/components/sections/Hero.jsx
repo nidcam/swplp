@@ -38,7 +38,7 @@ export default function Hero() {
 
           {/* 3 — headline */}
           <h1 className="mx-auto mt-6 max-w-4xl text-[1.85rem] font-extrabold leading-[1.15] sm:text-4xl md:text-5xl">
-            <span className="text-info">The SAMPURNA Health Framework</span> To Reclaim
+            <span className="text-info">The JADH Health Framework</span> To Reclaim
             Your Energy, Weight &amp; Confidence Without Medication.
           </h1>
 

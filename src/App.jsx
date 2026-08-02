@@ -6,7 +6,6 @@ import Bonuses from './components/sections/Bonuses'
 import Host from './components/sections/Host'
 import Proof from './components/sections/Proof'
 import ForWhom from './components/sections/ForWhom'
-import CtaBand from './components/sections/CtaBand'
 import FinalOffer from './components/sections/FinalOffer'
 import Footer from './components/sections/Footer'
 import StickyBottomBar from './components/StickyBottomBar'
@@ -25,7 +24,6 @@ export default function App() {
         <Host />
         <Proof />
         <ForWhom />
-        <CtaBand />
         <FinalOffer />
       </main>
       <Footer />

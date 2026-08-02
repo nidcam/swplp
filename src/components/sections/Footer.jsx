@@ -62,7 +62,7 @@ export default function Footer() {
             Main Website
           </a>
           <p className="text-[0.9rem]">
-            © {new Date().getFullYear()} Super Thyroid. All rights reserved.
+            © {new Date().getFullYear()} Health Nourish. All rights reserved.
           </p>
         </div>
 
