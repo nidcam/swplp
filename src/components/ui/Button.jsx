@@ -1,6 +1,9 @@
 const base =
   'inline-flex min-h-[56px] items-center justify-center gap-2 rounded-btn px-8 py-4 ' +
-  'text-base font-semibold leading-snug transition-colors duration-200 ' +
+  // transition-all (not just -colors) so the registration modal's submit
+  // button can morph its own size/shape smoothly when it shrinks into the
+  // "confirming" state — see RegistrationModal.jsx.
+  'text-base font-semibold leading-snug transition-all duration-300 ' +
   'disabled:cursor-not-allowed disabled:opacity-70 sm:text-lg'
 
 const variants = {

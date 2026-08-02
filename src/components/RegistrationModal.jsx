@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Button, { OfferCtaLabel } from './ui/Button'
 import CountdownTimer from './CountdownTimer'
 import { OptionSelectField, PhoneField, TextField } from './FormField'
+import { CheckIcon } from './ui/Icons'
 import { useRegistrationModal } from '../context/RegistrationModalContext'
 import { WEBINAR_FACTS, WHATSAPP_GROUP_URL } from '../lib/webinar'
 import { submitLead } from '../lib/submitLead'
@@ -31,6 +32,9 @@ const EMPTY = {
 }
 
 const REDIRECT_SECONDS = 5
+// How long the compact "confirming" state (spinner morphing into a checkmark)
+// holds before the full success card takes over.
+const CONFIRM_HOLD_MS = 900
 
 function validate(values) {
   const errors = {}
@@ -68,7 +72,7 @@ export default function RegistrationModal() {
   const [values, setValues] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const [country, setCountry] = useState('IN')
-  const [status, setStatus] = useState('idle') // idle | submitting | success | error
+  const [status, setStatus] = useState('idle') // idle | submitting | confirmed | success | error
   const [submitError, setSubmitError] = useState('')
   const [redirectSeconds, setRedirectSeconds] = useState(REDIRECT_SECONDS)
 
@@ -83,7 +87,9 @@ export default function RegistrationModal() {
     document.body.style.overflow = 'hidden'
 
     const onKeyDown = (event) => {
-      if (event.key === 'Escape' && status !== 'submitting') close()
+      if (event.key === 'Escape' && status !== 'submitting' && status !== 'confirmed') {
+        close()
+      }
     }
     document.addEventListener('keydown', onKeyDown)
 
@@ -125,7 +131,7 @@ export default function RegistrationModal() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    if (status === 'submitting') return
+    if (status === 'submitting' || status === 'confirmed') return
 
     const nextErrors = validate(values)
     setErrors(nextErrors)
@@ -154,8 +160,13 @@ export default function RegistrationModal() {
         fbq('track', 'Lead')
       }
 
-      setRedirectSeconds(REDIRECT_SECONDS)
-      setStatus('success')
+      // Hold on a compact "confirmed" state (spinner → checkmark) briefly
+      // before the full success card takes over.
+      setStatus('confirmed')
+      setTimeout(() => {
+        setRedirectSeconds(REDIRECT_SECONDS)
+        setStatus('success')
+      }, CONFIRM_HOLD_MS)
     } catch (err) {
       // Form values are left untouched — nothing the visitor typed is lost.
       setStatus('error')
@@ -169,9 +180,15 @@ export default function RegistrationModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-heading/60 p-4 backdrop-blur-sm sm:p-6"
+      className="fixed inset-0 z-[60] flex items-start justify-center overflow-y-auto bg-heading/60 p-4 backdrop-blur-sm sm:p-6 animate-fade-in"
       onMouseDown={(event) => {
-        if (event.target === event.currentTarget && status !== 'submitting') close()
+        if (
+          event.target === event.currentTarget &&
+          status !== 'submitting' &&
+          status !== 'confirmed'
+        ) {
+          close()
+        }
       }}
     >
       <div
@@ -179,12 +196,12 @@ export default function RegistrationModal() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="registration-modal-title"
-        className="relative my-auto w-full max-w-card rounded-card border border-line bg-white p-6 shadow-lift sm:p-9"
+        className="relative my-auto w-full max-w-card rounded-card border border-line bg-white p-6 shadow-lift animate-modal-in sm:p-9"
       >
         <button
           type="button"
           onClick={close}
-          disabled={status === 'submitting'}
+          disabled={status === 'submitting' || status === 'confirmed'}
           aria-label="Close registration form"
           className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-btn text-muted transition-colors hover:bg-mint hover:text-heading disabled:opacity-50"
         >
@@ -218,7 +235,7 @@ export default function RegistrationModal() {
         {status === 'success' ? (
           <div
             role="status"
-            className="mt-7 rounded-card border border-line bg-mint p-8 text-center shadow-soft"
+            className="mt-7 animate-fade-in rounded-card border border-line bg-mint p-8 text-center shadow-soft"
           >
             <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-accent/30 bg-accent-soft text-2xl text-accent">
               ✓
@@ -235,6 +252,39 @@ export default function RegistrationModal() {
               Automatically Redirecting in {redirectSeconds} Second
               {redirectSeconds === 1 ? '' : 's'}
             </p>
+          </div>
+        ) : status === 'submitting' || status === 'confirmed' ? (
+          // The small "shrinking button" moment: the whole form gives way to a
+          // compact panel whose icon morphs from a spinner into a checkmark.
+          <div
+            role="status"
+            className="mt-7 flex animate-fade-in flex-col items-center gap-4 rounded-card border border-line bg-mint p-10 text-center shadow-soft"
+          >
+            <span
+              className={`flex h-16 w-16 items-center justify-center rounded-full border transition-all duration-300 ${
+                status === 'confirmed'
+                  ? 'border-accent bg-accent-grad text-white'
+                  : 'border-accent/30 bg-accent-soft text-accent'
+              }`}
+            >
+              {status === 'confirmed' ? (
+                <CheckIcon className="h-7 w-7 animate-check-pop" strokeWidth={3} />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="h-6 w-6 animate-spin rounded-full border-2 border-accent/30 border-t-accent"
+                />
+              )}
+            </span>
+
+            <div>
+              <p className="text-base font-semibold text-heading">
+                {status === 'confirmed' ? 'You’re confirmed!' : 'Confirming your registration…'}
+              </p>
+              <p className="mt-1 text-sm text-muted">
+                {status === 'confirmed' ? 'Just a moment…' : 'This may take a few seconds.'}
+              </p>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} noValidate className="mt-7 space-y-5">
@@ -298,18 +348,10 @@ export default function RegistrationModal() {
                 </p>
               )}
 
-              <Button type="submit" fullWidth disabled={status === 'submitting'}>
-                {status === 'submitting' ? (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white"
-                    />
-                    Registering…
-                  </>
-                ) : (
-                  <OfferCtaLabel />
-                )}
+              {/* This form only ever renders while status is idle/error — the
+                  submitting/confirmed states swap it out for the panel above. */}
+              <Button type="submit" fullWidth>
+                <OfferCtaLabel />
               </Button>
 
               <p className="mt-4 text-center text-sm text-muted">

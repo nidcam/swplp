@@ -60,9 +60,27 @@ export default {
           from: { opacity: '0', transform: 'translateY(16px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
+        'fade-in': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        // The registration modal's entrance — a light pop rather than a slide.
+        'modal-in': {
+          from: { opacity: '0', transform: 'scale(0.94) translateY(8px)' },
+          to: { opacity: '1', transform: 'scale(1) translateY(0)' },
+        },
+        // The submit button's spinner morphing into a checkmark on success.
+        'check-pop': {
+          '0%': { opacity: '0', transform: 'scale(0.4)' },
+          '65%': { opacity: '1', transform: 'scale(1.18)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'fade-in': 'fade-in 0.25s ease-out both',
+        'modal-in': 'modal-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'check-pop': 'check-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both',
       },
     },
   },
