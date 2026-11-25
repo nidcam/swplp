@@ -226,7 +226,7 @@ export default function RegistrationModal() {
         </h2>
 
         <p className="mx-auto mt-3 max-w-lg text-center text-[0.9rem] leading-relaxed text-muted">
-          Join Nirmala live on Thursday, 6 August at {WEBINAR_FACTS.time}. 90 minutes.
+          Join Nirmala live on {WEBINAR_FACTS.dateNoYear} at {WEBINAR_FACTS.time}. 90 minutes.
           LIVE on Zoom. Conducted in Hindi. Completely free.
         </p>
 

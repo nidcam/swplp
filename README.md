@@ -89,7 +89,7 @@ strip. Every text sample on the page was measured — no AA failures.
 
 ## Countdown behaviour
 
-One `WEBINAR_START` constant (`2026-08-06T20:00:00+05:30`) drives all three
+One `WEBINAR_START` constant (`2026-12-08T19:00:00+05:30`) drives all three
 timers via one `CountdownTimer` component with three size variants:
 
 - `full` — four boxes, hero
